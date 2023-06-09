@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Валидация форм на jquery</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        .error-message {
+            display: none;
+            color: red;
+            font-size: 0.8em;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            max-width: 320px;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .form__input {
+            padding: 10px 25px;
+            background-color: #fff;
+            border: 1px solid black;
+            font-size: 14px;
+            border-radius: 10px;
+            outline: none;
+            transition: all .3s ease;
+        }
+
+        .form__input:focus {
+            border: 1px solid orange;
+        }
+
+        .form__input:hover {
+            border: 1px solid orange;
+        }
+
+        button {
+            padding: 10px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            outline: none;
+            border: none;
+            transition: all .3s ease;
+        }
+
+        button:focus {
+            background-color: orange;
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: orange;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Привет vsofts. Не знаю как выглядить ваши формы но примерный скрипт составил</h3>
+    <form id="form" class="form">
+        <input type="text" class="form__input" id="name" placeholder="Имя">
+        <span id="name-error" class="error-message">Минимум 3 буквы для заполнения</span>
+        <br>
+        <input type="tel" class="form__input" id="phone" name="phone" placeholder="Телефон" required>
+        <span id="phone-error" class="error-message">Минимум 5 цифр</span>
+        <br>
+        <input type="text" class="form__input" id="service" placeholder="Наименование услуги (необязательно)">
+        <br>
+        <button type="submit">Отправить</button>
+    </form>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#phone').mask('+7 (999) 999-99-99');
+        });
+        $(document).ready(function () {
+            $("#form").on("submit", function (event) {
+                event.preventDefault();
+            });
+
+            $("#name").on("input", function () {
+                var value = $(this).val();
+                if (value.length < 3) {
+                    $("#name-error").show();
+                } else {
+                    $("#name-error").hide();
+                }
+            });
+
+            $("#phone").on("input", function () {
+                var value = $(this).val();
+                if (value.replace(/[^\d]/g, "").length < 5) {
+                    $("#phone-error").show();
+                } else {
+                    $("#phone-error").hide();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
